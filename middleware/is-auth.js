@@ -2,13 +2,13 @@ const jwt = require('jsonwebtoken');
 
 module.exports = (req, res, next) => {
     const authHeader = req.get('Authorization');
-    console.log(authHeader);
+    console.log("Authentication Header",authHeader);
     if (!authHeader) {
         req.isAuth = false;
         return next();
     }
     const token = authHeader.split(' ')[1];
-    console.log(token);
+    console.log("Authentication Token",token);
     if (!token || token === '' ){
         req.isAuth = false;
         return next();
@@ -21,7 +21,7 @@ module.exports = (req, res, next) => {
         //     next();
         // });
         decodedToken = jwt.verify(token, 'somesupersecretkey');
-        console.log('decoded', decodedToken);
+        console.log('Decoded Token', decodedToken);
     } catch (error) {
         console.log(error);
         req.isAuth = false;

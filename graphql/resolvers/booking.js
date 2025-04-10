@@ -8,7 +8,7 @@ module.exports = {
             throw new Error('Unauthenticated!');
         }
         try {
-            const bookings = await Booking.find();
+            const bookings = await Booking.find({ user: req.userId});
 
             return bookings.map(booking => {
                 return transformBooking(booking);
@@ -38,7 +38,7 @@ module.exports = {
             console.log(booking.event._doc.creator);
             const event = transformEvent(booking.event);
 
-            await Booking.deleteOne({ _id: args.bookingid });
+            await Booking.deleteOne({ _id: args.bookingId });
             return event;
         } catch(err) {
             throw err;
